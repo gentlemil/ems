@@ -1,5 +1,7 @@
-import db from '@ems/prisma-client';
+import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
+
+import db from '@ems/prisma-client';
 
 type FormValues = {
   author_name: string;
@@ -15,6 +17,8 @@ export async function POST(request: Request) {
       content: data.content,
     },
   });
+
+  revalidatePath('/reviews', 'page');
 
   return NextResponse.json(review);
 }
