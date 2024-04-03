@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react';
 import { withThemeByClassName } from '@storybook/addon-themes';
 
 import './tailwind.css';
+import '../src/global.css'; //todo: create file and add tailwind imports @base...
 
 const preview: Preview = {
   parameters: {

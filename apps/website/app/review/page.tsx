@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 export default async function Review() {
   const reviews = await db.review.findMany({
-    // where: { is_confirmed: true }, // todo: uncomment when add more records
+    where: { is_confirmed: true },
     orderBy: { created_at: 'desc' },
   });
 
