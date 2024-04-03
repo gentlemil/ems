@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Props) {
       <body className={`${inter.className}`}>
         <div className="flex flex-col h-screen">
           <Menu />
-          <div className="container mx-auto p-6 border ">{children}</div>
+          <div className="container mx-auto p-6">{children}</div>
           <Footer />
         </div>
       </body>
