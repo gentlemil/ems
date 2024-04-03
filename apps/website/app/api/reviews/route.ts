@@ -9,7 +9,7 @@ type FormValues = {
 export async function POST(request: Request) {
   const data: FormValues = await request.json();
 
-  const review = await db.reviews.create({
+  const review = await db.review.create({
     data: {
       author_name: data.author_name,
       content: data.content,
