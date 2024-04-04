@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input } from '@ems/common-ui';
+import { Button, Input, Textarea } from '@ems/common-ui';
 import { z } from 'zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -54,7 +54,11 @@ export const AddReviewForm = () => {
         error={errors.author_name}
         className="w-1/2"
       />
-      <Input label="Review" {...register('content')} error={errors.content} />
+      <Textarea
+        label="Review"
+        {...register('content')}
+        error={errors.content}
+      />
       <Button ref={submitButtonRef} label="Submit" type="submit" />
     </form>
   );
