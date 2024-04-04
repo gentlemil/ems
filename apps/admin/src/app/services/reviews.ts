@@ -9,3 +9,21 @@ export const reviewsList = async () => {
     throw new Error('Error fetching reviews');
   }
 };
+
+export const modifyReviewConfirmation = async (id: string) => {
+  try {
+    const response = await api.patch(`/reviews/${id}/confirm`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    throw new Error('Error modifying review confirmation');
+  }
+};
+
+export const deleteReview = async (id: string) => {
+  try {
+    const response = await api.delete(`/reviews/${id}`);
+    return { status: response.status };
+  } catch (error) {
+    throw new Error('Error deleting review');
+  }
+};

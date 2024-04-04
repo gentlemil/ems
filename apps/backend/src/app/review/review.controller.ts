@@ -1,4 +1,4 @@
-import { Controller, Get, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Delete, Param, Patch } from '@nestjs/common';
 import { ReviewService } from './review.service';
 
 @Controller('reviews') // localhost:3000/api/reviews
@@ -16,10 +16,10 @@ export class ReviewController {
     return this.reviewService.getReviewById(id);
   }
 
-  // @Put(':id')
-  // updateReview(@Param('id') id: number, @Body() review: Review): Promise<Review> {
-  //   return this.reviewService.updateReview(id, review);
-  // }
+  @Patch(':id/confirm') // localhost:3000/api/reviews/:id/confirm
+  updateReview(@Param('id') id: string) {
+    return this.reviewService.updateReview(id);
+  }
 
   // TODO: AuthGuards (check if user is logged in)
   @Delete(':id') // localhost:3000/api/reviews/:id

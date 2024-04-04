@@ -26,15 +26,30 @@ export class ReviewService {
       },
     });
 
+    if (!review) {
+      throw new HttpException('Review not found', HttpStatus.NOT_FOUND);
+    }
+
     return review;
   }
 
   getReviewById(id: string) {
     const review = this.findById(id);
 
-    if (!review) {
-      throw new HttpException('Review not found', HttpStatus.NOT_FOUND);
-    }
+    return review;
+  }
+
+  async updateReview(id: string) {
+    const review = this.findById(id);
+
+    await this.db.review.update({
+      where: {
+        public_id: id,
+      },
+      data: {
+        is_confirmed: !(await review).is_confirmed,
+      },
+    });
 
     return review;
   }
@@ -42,15 +57,11 @@ export class ReviewService {
   async deleteReview(id: string) {
     const review = this.findById(id);
 
-    if (!review) {
-      throw new HttpException('Review not found', HttpStatus.NOT_FOUND);
-    }
-
     // TODO: if (user is not an author or is not an admin) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
 
     return await this.db.review.delete({
       where: {
-        public_id: id,
+        public_id: (await review).public_id,
       },
     });
   }
