@@ -1,14 +1,11 @@
-// import { nanoid } from 'nanoid';
+import React from 'react';
 import {
   forwardRef,
   type ForwardedRef,
   type ComponentPropsWithRef,
 } from 'react';
-
 import { classMerge } from '../utils/cn';
 import { FieldError } from 'react-hook-form';
-
-import React = require('react');
 
 type Props = {
   label: string;
@@ -20,7 +17,6 @@ export const Input = forwardRef(
     { label, error, className, ...rest }: Props,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
-    // const id = nanoid();
     return (
       <div className="my-2">
         <label

@@ -1,5 +1,5 @@
+import React from 'react';
 import { forwardRef, type ComponentPropsWithoutRef, ForwardedRef } from 'react';
-import React = require('react');
 
 type Props = {
   label: string;
