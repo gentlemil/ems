@@ -63,24 +63,45 @@ To execute tasks with Nx use the following syntax:
 ### WEBSITE (NextJS):
 
 ```
-npx nx serve website
+npx nx serve website        // http://localhost:4300
+npx nx storybook website    // ?
+
 ```
 
 ### BACKEND (NestJS):
 
 ```
-npx nx serve backend
+npx nx serve backend      // http://localhost:3000
 ```
 
 ### ADMIN (ReactJS):
 
 ```
-npx nx serve admin
+npx nx serve admin        // http://localhost:4200
+npx nx storybook admin    // http://localhost:4400
+npx nx build admin
+```
+
+### COMMON-UI:
+
+```
+npx nx serve common-ui    // http://localhost:4600
+
 ```
 
 ### PRISMA:
 
-If you want open prisma studio (localhost:5555) run:
+If you want run database locally you need to create docker container by running a command:
+
+```
+docker compose up
+```
+
+then, if you want open prisma studio (localhost:5555) run:
+
+```
+
+```
 
 ```
 cd libs/prisma-schema
