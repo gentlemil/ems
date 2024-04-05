@@ -6,6 +6,7 @@ import {
 
 import { classMerge } from '../utils/cn';
 import { FieldError } from 'react-hook-form';
+import React = require('react');
 
 type Props = {
   label: string;

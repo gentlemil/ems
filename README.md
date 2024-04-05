@@ -117,6 +117,12 @@ export DATABASE_URL=<your_database_url>
 npx nx run prisma-schema:generate-types
 ```
 
+If you want to migrate run:
+
+```
+npx nx run prisma-schema:migrate-dev
+```
+
 If you want to migrate currenctly made changes run:
 
 ```

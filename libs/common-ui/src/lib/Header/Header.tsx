@@ -1,3 +1,5 @@
+import React = require('react');
+
 type Props = Readonly<{
   children: string;
 }>;
