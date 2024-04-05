@@ -7,6 +7,9 @@
 ## Application flow
 
 ```mermaid
+---
+title: Application flow
+---
 graph LR
     A[WEBSITE<br>NextJS] --> B[PRISMA<br>JS]
     B --> A
@@ -21,6 +24,36 @@ graph LR
     E --> D
 
     F(COMMON-UI)
+```
+
+```mermaid
+---
+title: Create, confirm and display Reviews
+---
+flowchart TD
+    subgraph WEBSITE
+    RL[Reviews<br>List]
+    FCR[Form Create<br>Review]
+    end
+    RL --> |POST<br>/reviews| P[PrismaJS<br>ORM]
+    FCR --> P
+
+    P --> DB[(DB<br>PostgreSQL)]
+    DB --> P
+
+    DB --> RL
+
+    subgraph ADMIN - Review List
+    ARL[Reviews<br>List]
+    R{Review}
+    ARL --> R
+    end
+
+    R --> |PATCH<br>is_confirmed = true|DB
+    R --> |DELETE|DB
+
+    RC[Revalidate Cache] --> P
+    RC --> |Refresh|RL
 ```
 
 ## Running tasks
