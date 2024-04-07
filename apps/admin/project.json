@@ -4,7 +4,6 @@
   "sourceRoot": "apps/admin/src",
   "projectType": "application",
   "tags": [],
-  "// targets": "to see all targets run: nx show project admin --web",
   "targets": {
     "build": {
       "executor": "@nx/vite:build",
@@ -27,8 +26,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "admin:build",
-        "port": 4200,
-        "proxyConfig": "apps/admin/proxy.conf.json"
+        "port": 4800
       },
       "configurations": {
         "development": {
@@ -39,6 +37,13 @@
           "buildTarget": "admin:build:production",
           "hmr": false
         }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "admin:build",
+        "port": 4800
       }
     },
     "preview": {
@@ -66,12 +71,6 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
-    },
-    "serve-static": {
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "admin:build"
-      }
     },
     "storybook": {
       "executor": "@nx/storybook:storybook",

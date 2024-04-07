@@ -4,6 +4,5 @@ buildCommand = "npx nx run prisma-schema:generate-types && npx nx run admin:buil
 watchPatterns = ["/apps/admin"]
 
 [deploy]
-startCommand = "npx nx run prisma-schema:migrate-prod &&  npx nx run admin:serve:production"
-healthcheckTimeout = 300
+startCommand = "npx nx run admin:serve:production"
 restartPolicyType = "ON_FAILURE"
