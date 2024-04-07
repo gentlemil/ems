@@ -10,14 +10,14 @@
         "cwd": "prisma/src/lib"
       }
     },
-    "generate-types": {
-      "command": "prisma generate",
+    "studio": {
+      "command": "prisma studio",
       "options": {
         "cwd": "libs/prisma-schema"
       }
     },
-    "studio": {
-      "command": "prisma studio",
+    "generate-types": {
+      "command": "prisma generate",
       "options": {
         "cwd": "libs/prisma-schema"
       }
