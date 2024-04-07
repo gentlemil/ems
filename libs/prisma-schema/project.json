@@ -28,7 +28,7 @@
         "cwd": "libs/prisma-schema"
       }
     },
-    "migrate-prod": {
+    "migrate-deploy": {
       "command": "prisma migrate deploy",
       "options": {
         "cwd": "libs/prisma-schema"
