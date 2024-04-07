@@ -68,8 +68,10 @@ To execute tasks with Nx use the following syntax:
 
 ### WEBSITE (NextJS):
 
+https://website-nextjs-production.up.railway.app/
+
 ```
-npx nx serve website        // http://localhost:4300
+npx nx serve website        // http://localhost:4200
 npx nx storybook website    // ?
 
 ```
@@ -82,8 +84,10 @@ npx nx serve backend      // http://localhost:3000
 
 ### ADMIN (ReactJS):
 
+https://admin-react-production-9a32.up.railway.app/
+
 ```
-npx nx serve admin        // http://localhost:4200
+npx nx serve admin        // http://localhost:4800
 npx nx storybook admin    // http://localhost:4400
 npx nx build admin
 ```
