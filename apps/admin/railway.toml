@@ -1,0 +1,9 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npx nx run prisma-schema:generate-types && npx nx run admin:build:production"
+watchPatterns = ["/apps/admin"]
+
+[deploy]
+startCommand = "npx nx run prisma-schema:migrate-prod &&  npx nx run admin:serve:production"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
