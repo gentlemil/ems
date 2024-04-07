@@ -4,6 +4,7 @@ buildCommand = "npx nx run prisma-schema:generate-types && npx nx run backend:bu
 watchPatterns = ["/apps/backend"]
 
 [deploy]
-startCommand = "npx nx run backend:serve:production"
-healthcheckTimeout = 300
+startCommand = "npx nx run prisma-schema:migrate-deploy && npx nx run backend:serve:production"
+#healthcheckPath = "/api/health"
+#healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
