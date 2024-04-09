@@ -1,10 +1,8 @@
-import './global.css';
-import { Inter } from 'next/font/google';
+import { inter } from './fonts';
 
-import { Footer } from './components/Footer';
-import { Menu } from './components/Menu';
-
-const inter = Inter({ subsets: ['latin'] });
+import './style.css';
+import { Menu } from '../components/Menu';
+import { Footer } from '../components/Footer';
 
 type Props = Readonly<{
   children: React.ReactNode;

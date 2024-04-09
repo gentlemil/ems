@@ -12,6 +12,9 @@ export const Footer = () => {
           <MenuItem>
             <Link href="/about">About</Link>
           </MenuItem>
+          <MenuItem>
+            <Link href="/contact">Contact</Link>
+          </MenuItem>
         </Menu>
       </div>
     </div>

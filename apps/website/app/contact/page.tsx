@@ -1,9 +1,9 @@
 import { Header } from '@ems/common-ui';
 
-export default function Index() {
+export default async function Contact() {
   return (
     <div>
-      <Header>Home</Header>
+      <Header>Contact</Header>
     </div>
   );
 }
