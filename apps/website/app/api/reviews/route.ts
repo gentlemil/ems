@@ -8,6 +8,7 @@ type FormValues = {
   content: string;
 };
 
+// create a new review
 export async function POST(request: Request) {
   const data: FormValues = await request.json();
 
@@ -21,4 +22,13 @@ export async function POST(request: Request) {
   revalidatePath('/reviews', 'page');
 
   return NextResponse.json(review);
+}
+// get reviews
+export async function GET(request: Request) {
+  const reviews = await db.review.findMany({
+    where: { is_confirmed: true },
+    orderBy: { created_at: 'desc' },
+  });
+
+  return NextResponse.json(reviews);
 }

@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
+
+import { Header } from '@ems/common-ui';
 import {
   reviewsList,
   modifyReviewConfirmation,
   deleteReview,
 } from '../services/reviews';
-import { Header } from '@ems/common-ui';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { MdPublishedWithChanges } from 'react-icons/md';
 
 export const ReviewsPage = () => {
   const { data, error, isLoading, refetch } = useQuery({
@@ -19,21 +21,18 @@ export const ReviewsPage = () => {
   }
 
   if (error) {
-    console.log(error.message);
     return <p>Error</p>;
   }
 
-  const handleConfirmation =
-    (id: string) => async (_event: React.MouseEvent<HTMLButtonElement>) => {
-      await modifyReviewConfirmation(id);
-      await refetch();
-    };
+  const handleConfirmation = (id: string) => async () => {
+    await modifyReviewConfirmation(id);
+    await refetch();
+  };
 
-  const handleDeleteReview =
-    (id: string) => async (_event: React.MouseEvent<HTMLButtonElement>) => {
-      await deleteReview(id);
-      await refetch();
-    };
+  const handleDeleteReview = (id: string) => async () => {
+    await deleteReview(id);
+    await refetch();
+  };
 
   return (
     <div className="container mx-auto px-4">
@@ -92,11 +91,11 @@ export const ReviewsPage = () => {
                     <td className="px-6 py-4">
                       <div className="col-span-2 flex justify-center items-center gap-4">
                         <button onClick={handleConfirmation(review.public_id)}>
-                          <FontAwesomeIcon icon={['fas', 'eye']} />
+                          <MdPublishedWithChanges className="w-5 h-5 hover:scale-110 transition-all" />
                         </button>
 
                         <button onClick={handleDeleteReview(review.public_id)}>
-                          <FontAwesomeIcon icon={['fas', 'trash']} />
+                          <FaRegTrashAlt className="w-5 h-5 hover:scale-110 transition-all" />
                         </button>
                       </div>
                     </td>

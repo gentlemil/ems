@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu as CUMenu, MenuItem, classMerge } from '@ems/common-ui';
 import { usePathname } from 'next/navigation';
+
+import { Menu as CUMenu, MenuItem, classMerge } from '@ems/common-ui';
 
 export const Menu = () => {
   const pathName = usePathname();
-  console.log(pathName);
 
   const buildClassName = (path: string) => {
     return classMerge('text-lg', {

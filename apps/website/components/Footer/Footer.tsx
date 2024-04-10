@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { Menu, MenuItem } from '@ems/common-ui';
 
 export const Footer = () => {

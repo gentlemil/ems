@@ -1,18 +1,11 @@
 import { Route, Routes, Link } from 'react-router-dom';
-import { DashboardPage } from './pages/Dashboard';
-import { Menu, MenuItem } from '@ems/common-ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import '@fortawesome/fontawesome-free';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import { Menu, MenuItem } from '@ems/common-ui';
+import { DashboardPage } from './pages/Dashboard';
 import { ReviewsPage } from './pages/ReviewsPage';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-library.add(far, fas, fab);
 
 const queryClient = new QueryClient();
 

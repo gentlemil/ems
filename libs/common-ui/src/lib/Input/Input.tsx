@@ -1,11 +1,12 @@
 import React from 'react';
+import { FieldError } from 'react-hook-form';
+
 import {
   forwardRef,
   type ForwardedRef,
   type ComponentPropsWithRef,
 } from 'react';
 import { classMerge } from '../utils/cn';
-import { FieldError } from 'react-hook-form';
 
 type Props = {
   label: string;
