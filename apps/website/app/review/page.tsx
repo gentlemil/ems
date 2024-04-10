@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { Header } from '@ems/common-ui';
 
 import { FaRegUserCircle } from 'react-icons/fa';
+import { Card } from 'apps/website/components/Card';
 
 type Review = {
   id: number;
@@ -50,10 +51,7 @@ export default function Review() {
       <div>
         <ul className="grid grid-cols-3 gap-4">
           {reviews.map((review) => (
-            <li
-              key={review.id}
-              className="flex flex-col justify-start items-center gap-2 rounded-lg shadow-lg p-4"
-            >
+            <Card key={review.id}>
               <div className="w-full flex justify-end items-center">
                 <p className="text-xs font-light italic text-gray-700">
                   {format(review.created_at, 'dd-MM-yyyy hh:mm')}
@@ -66,7 +64,7 @@ export default function Review() {
                 <h3>{review.author_name}</h3>
               </div>
               <p className="text-justify text-normal ">{`"${review.content}"`}</p>
-            </li>
+            </Card>
           ))}
         </ul>
       </div>

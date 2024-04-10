@@ -5,6 +5,40 @@ import { usePathname } from 'next/navigation';
 
 import { Menu as CUMenu, MenuItem, classMerge } from '@ems/common-ui';
 
+type Path = {
+  id: number;
+  name: string;
+  url: string;
+};
+
+const paths: Path[] = [
+  {
+    id: 1,
+    name: 'Home',
+    url: '/',
+  },
+  {
+    id: 2,
+    name: 'About',
+    url: '/about',
+  },
+  {
+    id: 3,
+    name: 'Reviews',
+    url: '/review',
+  },
+  {
+    id: 4,
+    name: 'Add review',
+    url: '/review/add',
+  },
+  {
+    id: 5,
+    name: 'Contact',
+    url: '/contact',
+  },
+];
+
 export const Menu = () => {
   const pathName = usePathname();
 
@@ -15,38 +49,17 @@ export const Menu = () => {
   };
 
   return (
-    <div className="bg-slate-900 text-white">
+    <div className="w-full bg-slate-900 text-white">
       <div className="container mx-auto p-4">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <CUMenu>
-            <MenuItem>
-              <Link href="/" className={buildClassName('/')}>
-                Home
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="about/" className={buildClassName('/about')}>
-                About
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/review" className={buildClassName('/review')}>
-                Reviews
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link
-                href="/review/add"
-                className={buildClassName('/review/add')}
-              >
-                Add review
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/contact" className={buildClassName('/contact')}>
-                Contact
-              </Link>
-            </MenuItem>
+            {paths.map((path: Path) => (
+              <MenuItem key={path.id}>
+                <Link href={path.url} className={buildClassName(path.url)}>
+                  {path.name}
+                </Link>
+              </MenuItem>
+            ))}
           </CUMenu>
 
           <div className="flex items-center">
