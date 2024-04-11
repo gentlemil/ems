@@ -34,32 +34,34 @@ graph LR
 
 ```mermaid
 ---
-title: Create, confirm and display Reviews
+title: Create and display Reviews
 ---
-flowchart TD
-    subgraph WEBSITE
-    RL[Reviews<br>List]
-    FCR[Form Create<br>Review]
-    end
-    RL --> |POST<br>/reviews| P[PrismaJS<br>ORM]
-    FCR --> P
+sequenceDiagram
+    actor U as User
+    participant W as Website
+    participant P as Prisma
+    participant DB as Database
+    participant AP as Admin Panel
+    actor A as Admin
 
-    P --> DB[(DB<br>PostgreSQL)]
-    DB --> P
+    U->>W: Show reviews
+    P-->>W: GET /api/reviews
 
-    DB --> RL
+    U->>+W: CreateReviewForm
+    W-->>-P: POST review/add
+    Note over W,P: revalidate cache and<br>navigate to /reviews page
 
-    subgraph ADMIN - Review List
-    ARL[Reviews<br>List]
-    R{Review}
-    ARL --> R
-    end
+    P->>DB: INSERT INTO Review
+    Note over P,DB: with is_confirmed=false
 
-    R --> |PATCH<br>is_confirmed = true|DB
-    R --> |DELETE|DB
+    A->>+AP: GET /reviews
+    AP->>+P: PATCH /reviews/${id}/confirm
+    P-->>-DB: UPDATE
+    Note over P,DB: with is_confirmed=true
 
-    RC[Revalidate Cache] --> P
-    RC --> |Refresh|RL
+    AP->>+P: DELETE /reviews/${id}
+    P-->>-DB: DELETE
+    Note over P,DB: remove record from db
 ```
 
 ## Running tasks

@@ -3,10 +3,9 @@
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 
-import { Header } from '@ems/common-ui';
-
 import { FaRegUserCircle } from 'react-icons/fa';
-import { Card } from 'apps/website/components/Card';
+
+import { Card } from '@ems/common-ui';
 
 type Review = {
   id: number;
@@ -63,6 +62,7 @@ export default function Review() {
 
                 <h3>{review.author_name}</h3>
               </div>
+
               <p className="text-justify text-normal ">{`"${review.content}"`}</p>
             </Card>
           ))}
