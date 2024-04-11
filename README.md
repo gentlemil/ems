@@ -8,7 +8,18 @@
 
 1. Admin Page: https://admin-react-production-a6af.up.railway.app/
 2. Website: https://website-nextjs-production.up.railway.app/
-3.
+
+## Repository overview
+
+├── README.md
+├── apps
+│ ├── backend (NestJS)
+│ ├── frontend (React)
+│ └── website (NextJS)
+└── libs
+│ ├── common-ui
+│ ├── prisma-client
+│ └── prisma-schema
 
 ## Application flow
 
@@ -63,8 +74,6 @@ sequenceDiagram
     P-->>-DB: DELETE
     Note over P,DB: remove record from db
 ```
-
-## Running tasks
 
 To execute tasks with Nx use the following syntax:
 
