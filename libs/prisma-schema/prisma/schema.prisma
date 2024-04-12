@@ -20,3 +20,13 @@ model Review {
   created_at    DateTime @default(now())
   is_confirmed  Boolean  @default(false)
 }
+
+model Article {
+  id            Int       @id @default(autoincrement())
+  public_id     String    @unique @default(uuid())
+  title         String
+  content       String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  is_published  Boolean  @default(false)
+}
