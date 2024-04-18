@@ -17,6 +17,12 @@ enum Role {
   USER
 }
 
+enum Sentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
 model User {
   id            Int       @id @default(autoincrement())
   public_id     String    @unique @default(uuid())
@@ -37,6 +43,7 @@ model Review {
   author_name   String
   created_at    DateTime @default(now())
   is_confirmed  Boolean  @default(false)
+  sentiment     Sentiment
 }
 
 model Article {
