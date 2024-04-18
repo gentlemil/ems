@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+
+.bg-gradient-ems {
+  background: rgb(24, 70, 137);
+  background: linear-gradient(
+    167deg,
+    rgba(24, 70, 137, 1) 0%,
+    rgba(39, 119, 103, 1) 100%
+  );
+}

@@ -1,0 +1,46 @@
+Employee Management System (EMS)
+
+## ZADANIE NR 2 ##
+feat/admin/dashboard
+
+[ ] - W panelu Admina zaprojektuj Dashboard. Będzie tam kilka komponentów, które pozwolą odnaleźć się w systemie.
+
+[ ] - Zmodyfikuj opinie w taki sposób, aby była przechowywana w niej informacja (np. w bazie danych).
+      Czy opinia jest pozytywna, negatywna, czy neutralna. Jeśli chcesz, to możesz do tego wykrozystać API od Open, AI, które na podstawie wprowadzonego tekstu zwróci wynik w postaci JSON.
+
+[ ] - Na stronie Dasboard w Panelu admina wyświetl 3 komponenty: liczbę pozytywnych, negatywnych i neutralnych opinii. Te komponenty ułóż w jednym wierszu.
+
+[ ] - Poniżej umieść komponent z 3 ostatnimi opiniami.
+‍
+[ ] - W kolejnym kroku postaraj się zrobić prosty CRUD dla pracowników. Endpointy powinny być obsługiwane przez backend (NestJS), a prezentacja w aplikacji Admin (React).
+      Mile widziana walidacja zarówno po stronie UI, jak również walidacja przychodzących danych po stronie backendu.
+
+## ZADANIE NR 1 ##
+
+W ramach tego projektu stworzymy system zarządzania pracownikami w organizacji. Przed Tobą kilka ciekawych wyzwań - stworzenie aplikacji, zakodowanie funkcjonalności oraz deployment. Zadania będziemy z czasem dodawali kolejne funkcjonalności.
+
+Start projektu
+[X] - Stwórz nową strukturę projektu w NX.dev. Będziemy potrzebowali 3 aplikacji:
+
+Admin - React
+Backend - NestJS
+Website - Next.js
+
+[X] - Stwórz 3 odpowiednie aplikacje w folderze "apps". Wieć w folderze apps powinny zawierać się 3 aplikacje: admin, backend, website.
+
+Dodatkowo skorzystamy na razie z jednej biblioteki "common-ui", która będzie przechowywała komponenty współdzielone pomiędzy aplikacjami Frontend i Website. Do tej biblioteki dodaj kilka komponentów takich jak Input, Button, Header, Paragraph (ich implementacja nie ma na razie znaczenia).
+Upewnij się, że każda z tych aplikacji działa odpalając odpowiednie polecenia. Np. nx dev website lub nx serve website.
+Pomocna może okazać się wtyczka do NX od edytorów kodu np. https://code.visualstudio.com/
+
+Zaprojektowanie systemu
+[X] - Twoim zadaniem jest zaprojektowanie schematu systemu. To będzie na razie jeden schemat, którego zadaniem będzie opisanie jak docelowo będzie zachowywała się aplikacja. W pierwszym kroku zechcemy mieć możliwość dodawania opinii o naszej firmie z poziomu Website (Next.js). Każda dodana opinia powinna być zatwierdzona w panelu admina (React).
+Zanim jednak napiszesz kod stwórz diagram sekwencji w mermaid i dodaj go do projektu. Edytor jest dostępny pod tym linkiem: https://mermaid.live/edit. Schemat powinien pokazywać, jakie aplikacje będą zaangażowane w proces dodawania opinii, oraz jakie są kroki do wykonania.
+Jako bazę danych możesz zastosować Airtable lub skorzystać z Prisma czy Drizzle i dobrać do tego np. Postgresa.
+Do opisania decyzji o wyborze rozwiązania Airtable, czy lokalny postgres wykorzystaj Architecture Decision Record (ADR). Nie musisz instalować żadnego frameworka, wystarczy plik tekstowy. Zachęcam Cię, aby do każdej decyzji tworzyć nowy plik ADR. Warto zerknąć do Bazy wiedzy, aby zapoznać się z ADR.
+
+Pierwsza funkcjonalność
+Jeżeli upewnisz się, że masz już wszystko zsetupowane, masz diagram oraz ADR, możemy ruszać :)
+
+[X] - Twoim pierwszym zadaniem jest dodanie opinii o naszej firmie z poziomu Website. Opinia trafia do API/bazy danych, ale nie jest jeszcze widoczna na stronie. Dopiero po zatwierdzeniu jej w panelu admina (lub odrzuceniu)  będzie widoczna na stronie. Podczas dodawania opinii wykorzystaj walidację zarówno po stronie backendu, jak i po stronie frontendu. Pomocne może być wykorzystanie biblioteki Zod oraz React Hook Form.
+
+‍
