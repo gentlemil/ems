@@ -1,11 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+
+import { Review } from '@prisma/client';
+
 import { PrismaService } from '../../shared/services/prisma.service';
 
 @Injectable()
 export class ReviewService {
   constructor(private readonly db: PrismaService) {}
 
-  getAllReviews() {
+  getAllReviews(): Promise<Omit<Review, 'id'>[]> {
     const reviews = this.db.review.findMany({
       orderBy: {
         created_at: 'desc',
