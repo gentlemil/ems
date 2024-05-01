@@ -26,4 +26,10 @@ export class ReviewController {
   deleteReview(@Param('id') id: string) {
     return this.reviewService.deleteReview(id);
   }
+
+  @Get('stats')
+  async getReviewsStats() {
+    const stats = await this.reviewService.getReviewsStats();
+    return { stats };
+  }
 }

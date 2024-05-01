@@ -22,6 +22,29 @@ export class ReviewService {
     return reviews;
   }
 
+  async getReviewsStats() {
+    const reviews = await this.db.review.findMany();
+
+    if (!reviews) {
+      throw new HttpException('Reviews not found', HttpStatus.NOT_FOUND);
+    }
+
+    const stats: ReviewStats = {
+      positive: reviews.filter(
+        (review: Review) => review.sentiment === 'POSITIVE'
+      ).length,
+      neutral: reviews.filter(
+        (review: Review) => review.sentiment === 'NEUTRAL'
+      ).length,
+      negative: reviews.filter(
+        (review: Review) => review.sentiment === 'NEGATIVE'
+      ).length,
+      total: reviews.length,
+    };
+
+    return stats;
+  }
+
   async findById(id: string) {
     const review = await this.db.review.findUnique({
       where: {
@@ -69,3 +92,11 @@ export class ReviewService {
     });
   }
 }
+
+// TODO: move to shared folder
+export type ReviewStats = {
+  positive: number;
+  neutral: number;
+  negative: number;
+  total: number;
+};
