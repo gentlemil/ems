@@ -9,7 +9,7 @@ export enum Sentiment {
 
 export const reviewsStats = async () => {
   try {
-    const response = await api.get<any>('/reviews/stats');
+    const response = await api.get<any>('/reviews/statistics');
     return response.data;
   } catch (error) {
     throw new Error('Error fetching reviews stats');

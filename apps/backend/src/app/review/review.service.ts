@@ -8,11 +8,12 @@ import { PrismaService } from '../../shared/services/prisma.service';
 export class ReviewService {
   constructor(private readonly db: PrismaService) {}
 
-  getAllReviews(): Promise<Omit<Review, 'id'>[]> {
+  getAllReviews(query: any): Promise<Omit<Review, 'id'>[]> {
     const reviews = this.db.review.findMany({
       orderBy: {
         created_at: 'desc',
       },
+      take: +query?.limit || 10,
     });
 
     if (!reviews) {
@@ -22,7 +23,7 @@ export class ReviewService {
     return reviews;
   }
 
-  async getReviewsStats() {
+  async getReviewsStatistics() {
     const reviews = await this.db.review.findMany();
 
     if (!reviews) {

@@ -9,6 +9,7 @@ import {
 
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { MdPublishedWithChanges } from 'react-icons/md';
+import { format } from 'date-fns';
 
 export const ReviewsPage = () => {
   const { data, error, isLoading, refetch } = useQuery({
@@ -51,7 +52,15 @@ export const ReviewsPage = () => {
               </th>
 
               <th scope="col" className="px-6 py-3 text-center">
+                Created
+              </th>
+
+              <th scope="col" className="px-6 py-3 text-center">
                 Confirmation
+              </th>
+
+              <th scope="col" className="px-6 py-3 text-center">
+                Sentiment
               </th>
 
               <th scope="col" className="px-6 py-3 text-center">
@@ -69,8 +78,8 @@ export const ReviewsPage = () => {
           {(!data || data?.reviews.length > 0) && (
             <tbody>
               {data?.reviews &&
-                data.reviews.map((review) => (
-                  <tr key={review.id} className="odd:bg-white  even:bg-gray-50">
+                data.reviews.map((review, index) => (
+                  <tr key={index} className="odd:bg-white  even:bg-gray-50">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
@@ -80,12 +89,20 @@ export const ReviewsPage = () => {
 
                     <td className="px-6 py-4">{review.content}</td>
 
+                    <td className="px-6 py-4">
+                      {format(review.created_at, 'dd.MM.yyyy')}
+                    </td>
+
                     <td
                       className={`px-6 py-4 text-center ${
                         review.is_confirmed ? 'text-green-500' : 'text-red-500'
                       }`}
                     >
                       {review.is_confirmed ? 'Yes' : 'No'}
+                    </td>
+
+                    <td className="px-6 py-4 text-center">
+                      {review.sentiment || '-'}
                     </td>
 
                     <td className="px-6 py-4">
