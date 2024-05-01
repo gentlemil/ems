@@ -3,15 +3,8 @@ import { format } from 'date-fns';
 
 import { FaRegUserCircle } from 'react-icons/fa';
 
-import { reviewsList, reviewsStats } from '../services/reviews';
+import { dashboardReviewsList, reviewsStats } from '../services/reviews';
 import { Card, Header } from '@ems/common-ui';
-
-type ReviewStats = {
-  positive: number;
-  neutral: number;
-  negative: number;
-  total: number;
-};
 
 export const DashboardPage = () => {
   const {
@@ -20,7 +13,7 @@ export const DashboardPage = () => {
     data: dataRevs,
   } = useQuery({
     queryKey: ['reviews'],
-    queryFn: reviewsList,
+    queryFn: dashboardReviewsList,
   });
   const {
     isPending: isPendingStats,
@@ -31,6 +24,7 @@ export const DashboardPage = () => {
     queryFn: reviewsStats,
   });
 
+  // skeleton
   if (isPendingStats || isPendingRevs) {
     return (
       <div className="container mx-auto px-4">
@@ -46,13 +40,13 @@ export const DashboardPage = () => {
           </h2>
 
           <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card ratio="square">
+            <Card ratio="square" key={1}>
               <div></div>
             </Card>
-            <Card ratio="square">
+            <Card ratio="square" key={2}>
               <div></div>
             </Card>
-            <Card ratio="square">
+            <Card ratio="square" key={3}>
               <div></div>
             </Card>
           </ul>
@@ -64,13 +58,13 @@ export const DashboardPage = () => {
           </h2>
 
           <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card key="1">
+            <Card key={1}>
               <div className="h-40"></div>
             </Card>
-            <Card key="2">
+            <Card key={2}>
               <div className="h-40"></div>
             </Card>
-            <Card key="3">
+            <Card key={3}>
               <div className="h-40"></div>
             </Card>
           </ul>
@@ -79,6 +73,7 @@ export const DashboardPage = () => {
     );
   }
 
+  //errors
   if (errorStats || errorRevs) {
     return (
       <div className="w-full h-screen bg-gradient-ems py-20">
@@ -92,6 +87,7 @@ export const DashboardPage = () => {
     );
   }
 
+  // ok
   return (
     <div className="container mx-auto px-4">
       <Header>Dashboard</Header>
@@ -107,7 +103,7 @@ export const DashboardPage = () => {
 
         {dataStats.stats && dataStats.stats.total && (
           <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card ratio="square">
+            <Card ratio="square" key={1}>
               <div className="relative w-full h-full flex justify-center items-center">
                 <p className="text-7xl font-semibold text-ems-blue">
                   {dataStats.stats.positive}
@@ -119,25 +115,25 @@ export const DashboardPage = () => {
                 </div>
               </div>
             </Card>
-            <Card ratio="square">
+            <Card ratio="square" key={2}>
               <div className="relative w-full h-full flex justify-center items-center">
-                <p className="text-7xl font-semibold text-ems-blue">
+                <p className="text-7xl font-semibold text-ems-yellow">
                   {dataStats.stats.neutral}
                 </p>
                 <div className="w-full absolute bottom-0 flex justify-center items-center pb-4">
-                  <p className="text-lg font-semibold text-ems-blue uppercase tracking-wider">
+                  <p className="text-lg font-semibold text-ems-yellow uppercase tracking-wider">
                     Neutral
                   </p>
                 </div>
               </div>
             </Card>
-            <Card ratio="square">
+            <Card ratio="square" key={3}>
               <div className="relative w-full h-full flex justify-center items-center">
-                <p className="text-7xl font-semibold text-ems-blue">
+                <p className="text-7xl font-semibold text-ems-red">
                   {dataStats.stats.negative}
                 </p>
                 <div className="w-full absolute bottom-0 flex justify-center items-center pb-4">
-                  <p className="text-lg font-semibold text-ems-blue uppercase tracking-wider">
+                  <p className="text-lg font-semibold text-ems-red uppercase tracking-wider">
                     Negative
                   </p>
                 </div>
@@ -154,8 +150,8 @@ export const DashboardPage = () => {
 
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {dataRevs?.reviews &&
-            dataRevs.reviews.map((review) => (
-              <Card key={review.id}>
+            dataRevs.reviews.map((review, index) => (
+              <Card key={index}>
                 <div className="w-full flex justify-end items-center">
                   <p className="text-xs font-light italic text-gray-700">
                     {format(review.created_at, 'dd-MM-yyyy hh:mm')}

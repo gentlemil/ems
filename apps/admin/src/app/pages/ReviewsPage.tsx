@@ -5,16 +5,20 @@ import {
   reviewsList,
   modifyReviewConfirmation,
   deleteReview,
+  modifyReviewSentiment,
+  Sentiment,
 } from '../services/reviews';
 
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { MdPublishedWithChanges } from 'react-icons/md';
+import { useState } from 'react';
 
 export const ReviewsPage = () => {
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ['reviews'],
     queryFn: reviewsList,
   });
+  const [selectedSentiment, setSelectedSentimentValue] = useState(''); // todo: in progress
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -32,6 +36,17 @@ export const ReviewsPage = () => {
   const handleDeleteReview = (id: string) => async () => {
     await deleteReview(id);
     await refetch();
+  };
+
+  // todo: in progress
+  const handleReviewSentiment = (id: string, value: Sentiment) => async () => {
+    await modifyReviewSentiment(id, value);
+    await refetch();
+  };
+
+  const handleChange = (event: any) => {
+    setSelectedSentimentValue(event.target.value);
+    console.log(event.target.value);
   };
 
   return (
@@ -55,6 +70,10 @@ export const ReviewsPage = () => {
               </th>
 
               <th scope="col" className="px-6 py-3 text-center">
+                Sentiment
+              </th>
+
+              <th scope="col" className="px-6 py-3 text-center">
                 Options
               </th>
             </tr>
@@ -69,8 +88,8 @@ export const ReviewsPage = () => {
           {(!data || data?.reviews.length > 0) && (
             <tbody>
               {data?.reviews &&
-                data.reviews.map((review) => (
-                  <tr key={review.id} className="odd:bg-white  even:bg-gray-50">
+                data.reviews.map((review, index) => (
+                  <tr key={index} className="odd:bg-white  even:bg-gray-50">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
@@ -86,6 +105,49 @@ export const ReviewsPage = () => {
                       }`}
                     >
                       {review.is_confirmed ? 'Yes' : 'No'}
+                    </td>
+
+                    <td className="px-6 py-4 text-center">
+                      <div>
+                        <label htmlFor="sentiment-select"></label>
+                        <select
+                          id="sentiment-select"
+                          value={selectedSentiment}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select...</option>
+                          <option value="POSITIVE">Positive</option>
+                          <option value="NEUTRAL">Neutral</option>
+                          <option value="NEGATIVE">Negative</option>
+                        </select>
+                      </div>
+
+                      <button
+                        onClick={handleReviewSentiment(
+                          review.public_id,
+                          'POSITIVE' as Sentiment
+                        )}
+                      >
+                        pos
+                      </button>
+
+                      <button
+                        onClick={handleReviewSentiment(
+                          review.public_id,
+                          'NEUTRAL' as Sentiment
+                        )}
+                      >
+                        neu
+                      </button>
+
+                      <button
+                        onClick={handleReviewSentiment(
+                          review.public_id,
+                          'NEGATIVE' as Sentiment
+                        )}
+                      >
+                        neg
+                      </button>
                     </td>
 
                     <td className="px-6 py-4">

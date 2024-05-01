@@ -22,6 +22,8 @@ export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const QueryModeSchema = z.enum(['default','insensitive']);
 
+export const NullsOrderSchema = z.enum(['first','last']);
+
 export const RoleSchema = z.enum(['ADMIN','USER']);
 
 export type RoleType = `${z.infer<typeof RoleSchema>}`
@@ -58,7 +60,7 @@ export type User = z.infer<typeof UserSchema>
 /////////////////////////////////////////
 
 export const ReviewSchema = z.object({
-  sentiment: SentimentSchema,
+  sentiment: SentimentSchema.nullable(),
   id: z.number().int(),
   public_id: z.string().uuid(),
   content: z.string(),
@@ -253,7 +255,7 @@ export const ReviewWhereInputSchema: z.ZodType<Prisma.ReviewWhereInput> = z.obje
   author_name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   created_at: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   is_confirmed: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
-  sentiment: z.union([ z.lazy(() => EnumSentimentFilterSchema),z.lazy(() => SentimentSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => EnumSentimentNullableFilterSchema),z.lazy(() => SentimentSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReviewOrderByWithRelationInputSchema: z.ZodType<Prisma.ReviewOrderByWithRelationInput> = z.object({
@@ -263,7 +265,7 @@ export const ReviewOrderByWithRelationInputSchema: z.ZodType<Prisma.ReviewOrderB
   author_name: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   is_confirmed: z.lazy(() => SortOrderSchema).optional(),
-  sentiment: z.lazy(() => SortOrderSchema).optional()
+  sentiment: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
 }).strict();
 
 export const ReviewWhereUniqueInputSchema: z.ZodType<Prisma.ReviewWhereUniqueInput> = z.union([
@@ -288,7 +290,7 @@ export const ReviewWhereUniqueInputSchema: z.ZodType<Prisma.ReviewWhereUniqueInp
   author_name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   created_at: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   is_confirmed: z.union([ z.lazy(() => BoolFilterSchema),z.boolean() ]).optional(),
-  sentiment: z.union([ z.lazy(() => EnumSentimentFilterSchema),z.lazy(() => SentimentSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => EnumSentimentNullableFilterSchema),z.lazy(() => SentimentSchema) ]).optional().nullable(),
 }).strict());
 
 export const ReviewOrderByWithAggregationInputSchema: z.ZodType<Prisma.ReviewOrderByWithAggregationInput> = z.object({
@@ -298,7 +300,7 @@ export const ReviewOrderByWithAggregationInputSchema: z.ZodType<Prisma.ReviewOrd
   author_name: z.lazy(() => SortOrderSchema).optional(),
   created_at: z.lazy(() => SortOrderSchema).optional(),
   is_confirmed: z.lazy(() => SortOrderSchema).optional(),
-  sentiment: z.lazy(() => SortOrderSchema).optional(),
+  sentiment: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => ReviewCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => ReviewAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => ReviewMaxOrderByAggregateInputSchema).optional(),
@@ -316,7 +318,7 @@ export const ReviewScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Review
   author_name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   created_at: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   is_confirmed: z.union([ z.lazy(() => BoolWithAggregatesFilterSchema),z.boolean() ]).optional(),
-  sentiment: z.union([ z.lazy(() => EnumSentimentWithAggregatesFilterSchema),z.lazy(() => SentimentSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => EnumSentimentNullableWithAggregatesFilterSchema),z.lazy(() => SentimentSchema) ]).optional().nullable(),
 }).strict();
 
 export const ArticleWhereInputSchema: z.ZodType<Prisma.ArticleWhereInput> = z.object({
@@ -489,7 +491,7 @@ export const ReviewCreateInputSchema: z.ZodType<Prisma.ReviewCreateInput> = z.ob
   author_name: z.string(),
   created_at: z.coerce.date().optional(),
   is_confirmed: z.boolean().optional(),
-  sentiment: z.lazy(() => SentimentSchema)
+  sentiment: z.lazy(() => SentimentSchema).optional().nullable()
 }).strict();
 
 export const ReviewUncheckedCreateInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateInput> = z.object({
@@ -499,7 +501,7 @@ export const ReviewUncheckedCreateInputSchema: z.ZodType<Prisma.ReviewUncheckedC
   author_name: z.string(),
   created_at: z.coerce.date().optional(),
   is_confirmed: z.boolean().optional(),
-  sentiment: z.lazy(() => SentimentSchema)
+  sentiment: z.lazy(() => SentimentSchema).optional().nullable()
 }).strict();
 
 export const ReviewUpdateInputSchema: z.ZodType<Prisma.ReviewUpdateInput> = z.object({
@@ -508,7 +510,7 @@ export const ReviewUpdateInputSchema: z.ZodType<Prisma.ReviewUpdateInput> = z.ob
   author_name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   is_confirmed: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
-  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => EnumSentimentFieldUpdateOperationsInputSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NullableEnumSentimentFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReviewUncheckedUpdateInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateInput> = z.object({
@@ -518,7 +520,7 @@ export const ReviewUncheckedUpdateInputSchema: z.ZodType<Prisma.ReviewUncheckedU
   author_name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   is_confirmed: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
-  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => EnumSentimentFieldUpdateOperationsInputSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NullableEnumSentimentFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReviewCreateManyInputSchema: z.ZodType<Prisma.ReviewCreateManyInput> = z.object({
@@ -528,7 +530,7 @@ export const ReviewCreateManyInputSchema: z.ZodType<Prisma.ReviewCreateManyInput
   author_name: z.string(),
   created_at: z.coerce.date().optional(),
   is_confirmed: z.boolean().optional(),
-  sentiment: z.lazy(() => SentimentSchema)
+  sentiment: z.lazy(() => SentimentSchema).optional().nullable()
 }).strict();
 
 export const ReviewUpdateManyMutationInputSchema: z.ZodType<Prisma.ReviewUpdateManyMutationInput> = z.object({
@@ -537,7 +539,7 @@ export const ReviewUpdateManyMutationInputSchema: z.ZodType<Prisma.ReviewUpdateM
   author_name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   is_confirmed: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
-  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => EnumSentimentFieldUpdateOperationsInputSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NullableEnumSentimentFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ReviewUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyInput> = z.object({
@@ -547,7 +549,7 @@ export const ReviewUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ReviewUnchec
   author_name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   created_at: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   is_confirmed: z.union([ z.boolean(),z.lazy(() => BoolFieldUpdateOperationsInputSchema) ]).optional(),
-  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => EnumSentimentFieldUpdateOperationsInputSchema) ]).optional(),
+  sentiment: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NullableEnumSentimentFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ArticleCreateInputSchema: z.ZodType<Prisma.ArticleCreateInput> = z.object({
@@ -779,11 +781,16 @@ export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAg
   _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
 }).strict();
 
-export const EnumSentimentFilterSchema: z.ZodType<Prisma.EnumSentimentFilter> = z.object({
-  equals: z.lazy(() => SentimentSchema).optional(),
-  in: z.lazy(() => SentimentSchema).array().optional(),
-  notIn: z.lazy(() => SentimentSchema).array().optional(),
-  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentFilterSchema) ]).optional(),
+export const EnumSentimentNullableFilterSchema: z.ZodType<Prisma.EnumSentimentNullableFilter> = z.object({
+  equals: z.lazy(() => SentimentSchema).optional().nullable(),
+  in: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  notIn: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentNullableFilterSchema) ]).optional().nullable(),
+}).strict();
+
+export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z.object({
+  sort: z.lazy(() => SortOrderSchema),
+  nulls: z.lazy(() => NullsOrderSchema).optional()
 }).strict();
 
 export const ReviewCountOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewCountOrderByAggregateInput> = z.object({
@@ -824,14 +831,14 @@ export const ReviewSumOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewSumOrd
   id: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const EnumSentimentWithAggregatesFilterSchema: z.ZodType<Prisma.EnumSentimentWithAggregatesFilter> = z.object({
-  equals: z.lazy(() => SentimentSchema).optional(),
-  in: z.lazy(() => SentimentSchema).array().optional(),
-  notIn: z.lazy(() => SentimentSchema).array().optional(),
-  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentWithAggregatesFilterSchema) ]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedEnumSentimentFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumSentimentFilterSchema).optional()
+export const EnumSentimentNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumSentimentNullableWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => SentimentSchema).optional().nullable(),
+  in: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  notIn: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumSentimentNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumSentimentNullableFilterSchema).optional()
 }).strict();
 
 export const ArticleCountOrderByAggregateInputSchema: z.ZodType<Prisma.ArticleCountOrderByAggregateInput> = z.object({
@@ -896,8 +903,8 @@ export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdat
   divide: z.number().optional()
 }).strict();
 
-export const EnumSentimentFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumSentimentFieldUpdateOperationsInput> = z.object({
-  set: z.lazy(() => SentimentSchema).optional()
+export const NullableEnumSentimentFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumSentimentFieldUpdateOperationsInput> = z.object({
+  set: z.lazy(() => SentimentSchema).optional().nullable()
 }).strict();
 
 export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
@@ -1024,21 +1031,32 @@ export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDa
   _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
 }).strict();
 
-export const NestedEnumSentimentFilterSchema: z.ZodType<Prisma.NestedEnumSentimentFilter> = z.object({
-  equals: z.lazy(() => SentimentSchema).optional(),
-  in: z.lazy(() => SentimentSchema).array().optional(),
-  notIn: z.lazy(() => SentimentSchema).array().optional(),
-  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentFilterSchema) ]).optional(),
+export const NestedEnumSentimentNullableFilterSchema: z.ZodType<Prisma.NestedEnumSentimentNullableFilter> = z.object({
+  equals: z.lazy(() => SentimentSchema).optional().nullable(),
+  in: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  notIn: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
-export const NestedEnumSentimentWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumSentimentWithAggregatesFilter> = z.object({
-  equals: z.lazy(() => SentimentSchema).optional(),
-  in: z.lazy(() => SentimentSchema).array().optional(),
-  notIn: z.lazy(() => SentimentSchema).array().optional(),
-  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentWithAggregatesFilterSchema) ]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedEnumSentimentFilterSchema).optional(),
-  _max: z.lazy(() => NestedEnumSentimentFilterSchema).optional()
+export const NestedEnumSentimentNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumSentimentNullableWithAggregatesFilter> = z.object({
+  equals: z.lazy(() => SentimentSchema).optional().nullable(),
+  in: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  notIn: z.lazy(() => SentimentSchema).array().optional().nullable(),
+  not: z.union([ z.lazy(() => SentimentSchema),z.lazy(() => NestedEnumSentimentNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedEnumSentimentNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedEnumSentimentNullableFilterSchema).optional()
+}).strict();
+
+export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFilter> = z.object({
+  equals: z.number().optional().nullable(),
+  in: z.number().array().optional().nullable(),
+  notIn: z.number().array().optional().nullable(),
+  lt: z.number().optional(),
+  lte: z.number().optional(),
+  gt: z.number().optional(),
+  gte: z.number().optional(),
+  not: z.union([ z.number(),z.lazy(() => NestedIntNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
 /////////////////////////////////////////

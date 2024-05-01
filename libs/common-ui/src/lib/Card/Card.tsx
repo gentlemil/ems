@@ -9,7 +9,7 @@ type Props = {
 export const Card = ({ children, ratio = 'auto' }: Props) => {
   const buildClassName = (aspect: string) => {
     return classMerge(
-      'flex flex-col justify-start items-center gap-2 rounded-lg shadow-lg p-4',
+      'flex flex-col justify-start items-center gap-2 rounded-lg shadow-xl p-4',
       {
         'aspect-square': aspect === 'square',
         'aspect-video': aspect === 'video',

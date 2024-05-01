@@ -1,25 +1,54 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+
+import { Review } from '@prisma/client';
+
 import { PrismaService } from '../../shared/services/prisma.service';
 
 @Injectable()
 export class ReviewService {
   constructor(private readonly db: PrismaService) {}
 
-  getAllReviews() {
-    const reviews = this.db.review.findMany({
+  async getAllReviews(query?: any): Promise<Omit<Review, 'id'>[]> {
+    const reviews = await this.db.review.findMany({
       orderBy: {
-        created_at: 'desc',
+        created_at: query.orderBy || 'desc',
       },
+      take: +query?.limit || 10,
     });
 
     if (!reviews) {
       throw new HttpException('Reviews not found', HttpStatus.NOT_FOUND);
     }
 
-    return reviews;
+    const reviewsWithoutId = reviews.map(({ id, ...rest }) => rest);
+
+    return reviewsWithoutId;
   }
 
-  async findById(id: string) {
+  async getReviewsStats() {
+    const reviews = await this.db.review.findMany({});
+
+    if (!reviews) {
+      throw new HttpException('Reviews not found', HttpStatus.NOT_FOUND);
+    }
+
+    const stats: ReviewStats = {
+      positive: reviews.filter(
+        (review: Review) => review.sentiment === 'POSITIVE'
+      ).length,
+      neutral: reviews.filter(
+        (review: Review) => review.sentiment === 'NEUTRAL'
+      ).length,
+      negative: reviews.filter(
+        (review: Review) => review.sentiment === 'NEGATIVE'
+      ).length,
+      total: reviews.length,
+    };
+
+    return stats;
+  }
+
+  async findById(id: string): Promise<Review> {
     const review = await this.db.review.findUnique({
       where: {
         public_id: id,
@@ -33,13 +62,14 @@ export class ReviewService {
     return review;
   }
 
-  getReviewById(id: string) {
-    const review = this.findById(id);
+  async getReviewById(id: string): Promise<Omit<Review, 'id'>> {
+    const review = await this.findById(id);
 
-    return review;
+    const { id: _, ...rest } = review;
+    return rest;
   }
 
-  async updateReview(id: string) {
+  async updateReview(id: string): Promise<Review> {
     const review = this.findById(id);
 
     await this.db.review.update({
@@ -66,3 +96,11 @@ export class ReviewService {
     });
   }
 }
+
+// TODO: move to shared folder
+export type ReviewStats = {
+  positive: number;
+  neutral: number;
+  negative: number;
+  total: number;
+};

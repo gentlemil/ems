@@ -1,4 +1,4 @@
-import { Controller, Get, Delete, Param, Patch } from '@nestjs/common';
+import { Controller, Get, Delete, Param, Patch, Query } from '@nestjs/common';
 import { ReviewService } from './review.service';
 
 @Controller('reviews') // localhost:3000/api/reviews
@@ -6,9 +6,15 @@ export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
   @Get()
-  async getAllReviews() {
-    const reviews = await this.reviewService.getAllReviews();
+  async getAllReviews(@Query() query?: any) {
+    const reviews = await this.reviewService.getAllReviews(query);
     return { reviews };
+  }
+
+  @Get('stats')
+  async getReviewsStats() {
+    const stats = await this.reviewService.getReviewsStats();
+    return { stats };
   }
 
   @Get(':id') // localhost:3000/api/reviews/:id

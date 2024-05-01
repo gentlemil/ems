@@ -5,7 +5,7 @@ services:
     container_name: ems-postgres
     restart: always
     ports:
-      - '5432:5432'
+      - '5420:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass123
