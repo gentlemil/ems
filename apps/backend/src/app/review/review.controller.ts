@@ -14,8 +14,8 @@ export class ReviewController {
 
   @Get('statistics')
   async getReviewsStatistics() {
-    const stats = await this.reviewService.getReviewsStatistics();
-    return { stats };
+    const statistics = await this.reviewService.getReviewsStatistics();
+    return { statistics };
   }
 
   @Get(':id') // localhost:3000/api/reviews/:id

@@ -30,7 +30,7 @@ export class ReviewService {
       throw new HttpException('Reviews not found', HttpStatus.NOT_FOUND);
     }
 
-    const stats: ReviewStats = {
+    const statistics: ReviewStatistics = {
       positive: reviews.filter(
         (review: Review) => review.sentiment === 'POSITIVE'
       ).length,
@@ -43,7 +43,7 @@ export class ReviewService {
       total: reviews.length,
     };
 
-    return stats;
+    return statistics;
   }
 
   async findById(id: string) {
@@ -95,7 +95,7 @@ export class ReviewService {
 }
 
 // TODO: move to shared folder
-export type ReviewStats = {
+export type ReviewStatistics = {
   positive: number;
   neutral: number;
   negative: number;

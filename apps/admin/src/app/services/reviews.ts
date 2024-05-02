@@ -1,18 +1,12 @@
-import { Review } from '@prisma/client';
+import { Review, Sentiment } from '@prisma/client';
 import { api } from './config';
 
-export enum Sentiment {
-  POSITIVE = 'POSITIVE',
-  NEUTRAL = 'NEUTRAL',
-  NEGATIVE = 'NEGATIVE',
-}
-
-export const reviewsStats = async () => {
+export const reviewsStatistics = async () => {
   try {
     const response = await api.get<any>('/reviews/statistics');
     return response.data;
   } catch (error) {
-    throw new Error('Error fetching reviews stats');
+    throw new Error('Error fetching reviews statistics');
   }
 };
 
