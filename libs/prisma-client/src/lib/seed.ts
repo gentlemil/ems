@@ -19,7 +19,7 @@ async function main() {
   //   update: {},
   //   create: {
   //     email: 'user@user.pl',
-  //     firstName: 'Milosz',
+  //     firstName: 'Wojciech',
   //     lastName: 'User',
   //     password: 'user',
   //     role: 'USER',
@@ -30,8 +30,8 @@ async function main() {
   //   update: {},
   //   create: {
   //     email: 'marek@mostowiak.pl',
-  //     firstName: 'Marek',
-  //     lastName: 'Mostowiak',
+  //     first_name: 'Marek',
+  //     last_name: 'Mostowiak',
   //     password: 'mjakmilosc',
   //     role: 'USER',
   //   },
@@ -123,16 +123,32 @@ async function main() {
       is_confirmed: true,
     },
   });
-
-  // console.log({ admin, user, marek });
-  console.log({
-    firstReview,
-    secondReview,
-    thirdReview,
-    fourthReview,
-    fifthReview,
-    sixthReview,
-    seventhReview,
+  const eighthReview = await prisma.review.upsert({
+    where: { id: 8 },
+    update: {},
+    create: {
+      content: 'Application needs some improvements',
+      author_name: 'Michael Jordan',
+      is_confirmed: true,
+    },
+  });
+  const ninethReview = await prisma.review.upsert({
+    where: { id: 9 },
+    update: {},
+    create: {
+      content: 'Breathtaking! I love it!',
+      author_name: 'Angelina Jolie',
+      is_confirmed: true,
+    },
+  });
+  const tenthReview = await prisma.review.upsert({
+    where: { id: 10 },
+    update: {},
+    create: {
+      content: 'Ok, but could be better',
+      author_name: 'Johny Bravo',
+      is_confirmed: true,
+    },
   });
 }
 main()

@@ -26,7 +26,7 @@ export const DashboardPage = () => {
     queryFn: reviewsStatistics,
   });
 
-  const isLoading = isPendingRevs || isPendingStatistics;
+  const isLoading = isPendingRevs && isPendingStatistics;
 
   //errors
   if (errorStatistics || errorRevs) {
@@ -64,7 +64,11 @@ export const DashboardPage = () => {
               </h2>
 
               <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
-                <LastReviews reviews={dataRevs?.reviews} />
+                {dataRevs !== undefined ? (
+                  <LastReviews reviews={dataRevs.reviews} />
+                ) : (
+                  ''
+                )}
               </ul>
             </div>
           </div>
