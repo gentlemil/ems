@@ -38,8 +38,7 @@
   ],
   "references": [
     {
-      "path": "./tsconfig.storybook.json",
-      "composite": true
+      "path": "./tsconfig.storybook.json"
     }
   ]
 }
