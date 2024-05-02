@@ -58,6 +58,7 @@ async function main() {
       content: 'Amazing, fabulous, creative, bold, and interesting. I love it!',
       author_name: 'Murtagh Fitzgibbons',
       is_confirmed: true,
+      sentiment: 'POSITIVE',
     },
   });
   const secondReview = await prisma.review.upsert({
@@ -68,6 +69,7 @@ async function main() {
         'The happiness of your life depends upon the quality of your thoughts.',
       author_name: 'Marcus Aurelius',
       is_confirmed: false,
+      sentiment: 'NEUTRAL',
     },
   });
   const thirdReview = await prisma.review.upsert({
@@ -77,6 +79,7 @@ async function main() {
       content: 'I am a big fan of this app. Thanks guys.',
       author_name: 'John Travolta',
       is_confirmed: false,
+      sentiment: 'POSITIVE',
     },
   });
   const fourthReview = await prisma.review.upsert({
@@ -87,6 +90,7 @@ async function main() {
         "Ought we not to ask the media to agree among themselves a voluntary code of conduct, under which they would not say or show anything which could assist the terrorists' morale or their cause while the hijack lasted.",
       author_name: 'Margaret Thatcher',
       is_confirmed: true,
+      sentiment: 'NEUTRAL',
     },
   });
   const fifthReview = await prisma.review.upsert({
@@ -96,6 +100,26 @@ async function main() {
       content:
         'I am not the richest, smartest or most talented person in the world, but I succeed because I keep going and going and going.',
       author_name: 'Sylvester Stallone',
+      is_confirmed: true,
+      sentiment: 'NEUTRAL',
+    },
+  });
+  const sixthReview = await prisma.review.upsert({
+    where: { id: 6 },
+    update: {},
+    create: {
+      content: 'Some functionalities do not behave correctly',
+      author_name: 'John Doe',
+      is_confirmed: true,
+      sentiment: 'NEGATIVE',
+    },
+  });
+  const seventhReview = await prisma.review.upsert({
+    where: { id: 7 },
+    update: {},
+    create: {
+      content: 'Ok',
+      author_name: 'Anonymous',
       is_confirmed: true,
     },
   });
@@ -107,6 +131,8 @@ async function main() {
     thirdReview,
     fourthReview,
     fifthReview,
+    sixthReview,
+    seventhReview,
   });
 }
 main()
