@@ -4,12 +4,21 @@ import { Review } from '@prisma/client';
 
 import { PrismaService } from '../../shared/services/prisma.service';
 
+import { ReviewsResponseInterface } from './types/reviewsResponse.interface';
+import { ReviewType } from './types/review.type';
+import {
+  ReviewStatistics,
+  ReviewStatisticsResponseInterface,
+} from './types/reviewStatisticsResponse.interface';
+
+import { ReviewResponseInterface } from './types/reviewResponse.interface';
+
 @Injectable()
 export class ReviewService {
   constructor(private readonly db: PrismaService) {}
 
-  getAllReviews(query: any): Promise<Omit<Review, 'id'>[]> {
-    const reviews = this.db.review.findMany({
+  async getAllReviews(query: any): Promise<ReviewsResponseInterface> {
+    const reviews = await this.db.review.findMany({
       orderBy: {
         created_at: 'desc',
       },
@@ -19,11 +28,16 @@ export class ReviewService {
     if (!reviews) {
       throw new HttpException('Reviews not found', HttpStatus.NOT_FOUND);
     }
+    const reviewsWithoutId: ReviewType[] = reviews.map((review: Review) => {
+      const { id, ...rest } = review;
+      return rest;
+    });
+    const reviewsCount = await this.db.review.count();
 
-    return reviews;
+    return { reviews: reviewsWithoutId, reviewsCount };
   }
 
-  async getReviewsStatistics() {
+  async getReviewsStatistics(): Promise<ReviewStatisticsResponseInterface> {
     const reviews = await this.db.review.findMany();
 
     if (!reviews) {
@@ -40,16 +54,17 @@ export class ReviewService {
       negative: reviews.filter(
         (review: Review) => review.sentiment === 'NEGATIVE'
       ).length,
-      total: reviews.length,
     };
 
-    return statistics;
+    const total: number = await this.db.review.count();
+
+    return { statistics, total };
   }
 
-  async findById(id: string) {
+  async findById(public_id: string): Promise<Review> {
     const review = await this.db.review.findUnique({
       where: {
-        public_id: id,
+        public_id,
       },
     });
 
@@ -60,44 +75,42 @@ export class ReviewService {
     return review;
   }
 
-  getReviewById(id: string) {
-    const review = this.findById(id);
+  async getReviewById(public_id: string): Promise<ReviewType> {
+    const review = await this.findById(public_id);
 
-    return review;
+    const { id, ...rest } = review;
+
+    return rest;
   }
 
-  async updateReview(id: string) {
-    const review = this.findById(id);
+  async updateReview(public_id: string): Promise<ReviewType> {
+    const review = await this.findById(public_id);
 
-    await this.db.review.update({
+    const data = await this.db.review.update({
       where: {
-        public_id: id,
+        public_id,
       },
       data: {
         is_confirmed: !(await review).is_confirmed,
       },
     });
 
-    return review;
+    const { id, ...rest } = data;
+
+    return rest;
   }
 
-  async deleteReview(id: string) {
-    const review = this.findById(id);
-
-    // TODO: if (user is not an author or is not an admin) throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+  async deleteReview(public_id: string): Promise<any> {
+    const review: Review = await this.findById(public_id);
 
     return await this.db.review.delete({
       where: {
-        public_id: (await review).public_id,
+        public_id,
       },
     });
   }
-}
 
-// TODO: move to shared folder
-export type ReviewStatistics = {
-  positive: number;
-  neutral: number;
-  negative: number;
-  total: number;
-};
+  buildReviewResponse(review: ReviewType): ReviewResponseInterface {
+    return { review };
+  }
+}

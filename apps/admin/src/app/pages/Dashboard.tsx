@@ -56,7 +56,7 @@ export const DashboardPage = () => {
         <div className="grid grid-cols-7 gap-4">
           <div className="col-span-5">
             <div className="pb-4">
-              <ReviewStatistics statistics={dataStatistics.statistics} />
+              <ReviewStatistics statistics={dataStatistics} />
             </div>
             <div className="pb-4">
               <h2 className="text-xl font-semibold text-slate-900 my-4">
