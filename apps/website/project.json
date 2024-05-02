@@ -25,6 +25,7 @@
       "options": {
         "buildTarget": "website:build",
         "dev": true,
+        "port": 4300,
         "proxyConfig": "apps/website/proxy.conf.json"
       },
       "configurations": {
