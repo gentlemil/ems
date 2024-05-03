@@ -43,13 +43,14 @@ export class ArticleService {
     return article;
   }
 
-  async createArticle(createArticleDto: CreateArticleDto): Promise<Article> {
-    return await this.db.article.create({
-      data: {
-        ...createArticleDto,
-      },
-    });
-  }
+  // TODO
+  // async createArticle(createArticleDto: CreateArticleDto): Promise<Article> {
+  //   return await this.db.article.create({
+  //     data: {
+  //       ...createArticleDto,
+  //     },
+  //   });
+  // }
 
   async updateArticle(
     id: string,

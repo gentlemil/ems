@@ -34,6 +34,9 @@ model User {
   position      String
   created_at    DateTime     @default(now())
   updated_at    DateTime     @updatedAt
+  articles      Article[]
+
+  @@map("users")
 }
 
 model Review {
@@ -44,6 +47,8 @@ model Review {
   created_at    DateTime     @default(now())
   is_confirmed  Boolean      @default(false)
   sentiment     Sentiment?
+
+  @@map("reviews")
 }
 
 model Article {
@@ -54,4 +59,9 @@ model Article {
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt
   is_published  Boolean     @default(false)
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [public_id])
+
+  @@map("articles")
 }

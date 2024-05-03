@@ -24,13 +24,14 @@ export class ArticleController {
     return await this.articleService.getAllArticles();
   }
 
-  @Post()
-  async createArticle(
-    @Body('article') createArticleDto: CreateArticleDto
-  ): Promise<ArticleResponseInterface> {
-    const article = await this.articleService.createArticle(createArticleDto);
-    return this.articleService.buildArticleResponse(article);
-  }
+  // TODO
+  // @Post()
+  // async createArticle(
+  //   @Body('article') createArticleDto: CreateArticleDto
+  // ): Promise<ArticleResponseInterface> {
+  //   const article = await this.articleService.createArticle(createArticleDto);
+  //   return this.articleService.buildArticleResponse(article);
+  // }
 
   @Get(':id')
   async getSingleArticle(
