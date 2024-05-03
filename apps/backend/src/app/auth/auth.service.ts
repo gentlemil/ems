@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../shared/services';
 
 import { AuthDto } from './dto';
-import { SignInDto } from './dto/signIn.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +33,7 @@ export class AuthService {
     }
   }
 
-  async login(dto: SignInDto): Promise<{ access_token: string }> {
+  async login(dto: LoginDto): Promise<{ access_token: string }> {
     const user = await this.db.user.findUnique({
       where: { email: dto.email },
     });
