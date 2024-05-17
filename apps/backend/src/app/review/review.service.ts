@@ -3,15 +3,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Review } from '@prisma/client';
 
 import { PrismaService } from '../../shared/services';
-
-import { ReviewsResponseInterface } from './types/reviewsResponse.interface';
-import { ReviewType } from './types/review.type';
 import {
-  ReviewStatistics,
+  ReviewsResponseInterface,
+  ReviewType,
   ReviewStatisticsResponseInterface,
-} from './types/reviewStatisticsResponse.interface';
-
-import { ReviewResponseInterface } from './types/reviewResponse.interface';
+  ReviewStatistics,
+  ReviewResponseInterface,
+} from './types';
 
 @Injectable()
 export class ReviewService {

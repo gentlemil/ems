@@ -165,6 +165,59 @@ export const ArticleSelectSchema: z.ZodType<Prisma.ArticleSelect> = z.object({
   user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
 }).strict()
 
+// CREATE MANY USER AND RETURN OUTPUT TYPE
+//------------------------------------------------------
+
+export const CreateManyUserAndReturnOutputTypeSelectSchema: z.ZodType<Prisma.CreateManyUserAndReturnOutputTypeSelect> = z.object({
+  id: z.boolean().optional(),
+  public_id: z.boolean().optional(),
+  first_name: z.boolean().optional(),
+  last_name: z.boolean().optional(),
+  email: z.boolean().optional(),
+  password: z.boolean().optional(),
+  role: z.boolean().optional(),
+  position: z.boolean().optional(),
+  created_at: z.boolean().optional(),
+  updated_at: z.boolean().optional(),
+}).strict()
+
+// CREATE MANY REVIEW AND RETURN OUTPUT TYPE
+//------------------------------------------------------
+
+export const CreateManyReviewAndReturnOutputTypeSelectSchema: z.ZodType<Prisma.CreateManyReviewAndReturnOutputTypeSelect> = z.object({
+  id: z.boolean().optional(),
+  public_id: z.boolean().optional(),
+  content: z.boolean().optional(),
+  author_name: z.boolean().optional(),
+  created_at: z.boolean().optional(),
+  is_confirmed: z.boolean().optional(),
+  sentiment: z.boolean().optional(),
+}).strict()
+
+// CREATE MANY ARTICLE AND RETURN OUTPUT TYPE
+//------------------------------------------------------
+
+export const CreateManyArticleAndReturnOutputTypeIncludeSchema: z.ZodType<Prisma.CreateManyArticleAndReturnOutputTypeInclude> = z.object({
+  user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
+}).strict()
+
+export const CreateManyArticleAndReturnOutputTypeArgsSchema: z.ZodType<Prisma.CreateManyArticleAndReturnOutputTypeDefaultArgs> = z.object({
+  select: z.lazy(() => CreateManyArticleAndReturnOutputTypeSelectSchema).optional(),
+  include: z.lazy(() => CreateManyArticleAndReturnOutputTypeIncludeSchema).optional(),
+}).strict();
+
+export const CreateManyArticleAndReturnOutputTypeSelectSchema: z.ZodType<Prisma.CreateManyArticleAndReturnOutputTypeSelect> = z.object({
+  id: z.boolean().optional(),
+  public_id: z.boolean().optional(),
+  title: z.boolean().optional(),
+  content: z.boolean().optional(),
+  created_at: z.boolean().optional(),
+  updated_at: z.boolean().optional(),
+  is_published: z.boolean().optional(),
+  userId: z.boolean().optional(),
+  user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
+}).strict()
+
 
 /////////////////////////////////////////
 // INPUT TYPES
@@ -1554,6 +1607,11 @@ export const UserCreateManyArgsSchema: z.ZodType<Prisma.UserCreateManyArgs> = z.
   skipDuplicates: z.boolean().optional(),
 }).strict() ;
 
+export const UserAndReturnCreateManyArgsSchema: z.ZodType<Prisma.UserAndReturnCreateManyArgs> = z.object({
+  data: z.union([ UserCreateManyInputSchema,UserCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
 export const UserDeleteArgsSchema: z.ZodType<Prisma.UserDeleteArgs> = z.object({
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
@@ -1593,6 +1651,11 @@ export const ReviewCreateManyArgsSchema: z.ZodType<Prisma.ReviewCreateManyArgs> 
   skipDuplicates: z.boolean().optional(),
 }).strict() ;
 
+export const ReviewAndReturnCreateManyArgsSchema: z.ZodType<Prisma.ReviewAndReturnCreateManyArgs> = z.object({
+  data: z.union([ ReviewCreateManyInputSchema,ReviewCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
 export const ReviewDeleteArgsSchema: z.ZodType<Prisma.ReviewDeleteArgs> = z.object({
   select: ReviewSelectSchema.optional(),
   where: ReviewWhereUniqueInputSchema,
@@ -1628,6 +1691,11 @@ export const ArticleUpsertArgsSchema: z.ZodType<Prisma.ArticleUpsertArgs> = z.ob
 }).strict() ;
 
 export const ArticleCreateManyArgsSchema: z.ZodType<Prisma.ArticleCreateManyArgs> = z.object({
+  data: z.union([ ArticleCreateManyInputSchema,ArticleCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const ArticleAndReturnCreateManyArgsSchema: z.ZodType<Prisma.ArticleAndReturnCreateManyArgs> = z.object({
   data: z.union([ ArticleCreateManyInputSchema,ArticleCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
 }).strict() ;

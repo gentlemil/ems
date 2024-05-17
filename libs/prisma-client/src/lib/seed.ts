@@ -38,17 +38,17 @@ async function main() {
   // });
 
   // articles
-  for (let i = 1; i <= 10; i++) {
-    await prisma.article.upsert({
-      where: { id: i },
-      update: {},
-      create: {
-        title: `Article ${i}`,
-        content: `This is the content of article ${i}.`,
-        is_published: i % 2 === 0 ? true : false,
-      },
-    });
-  }
+  // for (let i = 1; i <= 10; i++) {
+  //   await prisma.article.upsert({
+  //     where: { id: i },
+  //     update: {},
+  //     create: {
+  //       title: `Article ${i}`,
+  //       content: `This is the content of article ${i}.`,
+  //       is_published: i % 2 === 0 ? true : false,
+  //     },
+  //   });
+  // }
 
   // reviews
   const firstReview = await prisma.review.upsert({
@@ -150,6 +150,19 @@ async function main() {
       is_confirmed: true,
     },
   });
+
+  console.log(
+    firstReview,
+    secondReview,
+    thirdReview,
+    fourthReview,
+    fifthReview,
+    sixthReview,
+    seventhReview,
+    eighthReview,
+    ninethReview,
+    tenthReview
+  );
 }
 main()
   .then(async () => {
